@@ -1,76 +1,13 @@
-import {render} from "react-dom";
 import React from "react";
-import {createStore, combineReducers, applyMiddleware} from "redux";
-import logger from "redux-logger";
+import {render} from "react-dom";
+import  store from "./store";
 import { Provider } from "react-redux";
-import App from "./components/App";
+import MainApp from './containers/MainApp'
 
-const mathReducer = (state = {
-    result: 1,
-    lastValues: []
-}, action) => {
-    switch (action.type) {
-        case "ADD":
-            state = {
-                ...state,
-                result: state.result + action.payload,
-                lastValues: [...state.lastValues, action.payload]
-            };
-            break;
-        case "SUBTRACT":
-            state = {
-                ...state,
-                result: state.result - action.payload,
-                lastValues: [...state.lastValues, action.payload]
-            };
-            break;
-    }
-    return state;
-};
 
-const userReducer = (state = {
-    name: "Max",
-    age: "27"
-}, action) => {
-    switch (action.type) {
-        case "SET_NAME":
-            state = {
-                ...state,
-                name: action.payload
-            }
-        break  
-        case "SET_AGE":
-            state = {
-                ...state,
-                age: action.payload
-            }
-        break  
-    }
-    return state;
-};
 
-const myLogger = (state) => (next) => (action) => {
-   console.log("Logged Action: ", action);
-    next(action);
-};
+render( <Provider store = {store}>
+            <MainApp />
+        </Provider>,
+         window.document.getElementById('app'))
 
-const store = createStore(
-    combineReducers({mathReducer, user:userReducer}),
-    {},
-    applyMiddleware(myLogger, logger)
-);
-
-store.subscribe(() => {
-    // console.log("Store updated!", store.getState());
-});
-
-render( <Provider store = {store}><App /></Provider>, window.document.getElementById('app'))
-
-switch (key) {
-    case value:
-        
-        break;
-
-    default:
-        break;
-}
